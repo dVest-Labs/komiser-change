@@ -57,11 +57,13 @@ export default function AWSCredentials() {
     options[0].value
   );
 
+  const [fileName, setFileName] = useState<string>('');
   const handleNext = () => {
     // TODO: (onboarding-wizard) complete form inputs, validation, submission and navigation
   };
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const handleButtonClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -70,10 +72,18 @@ export default function AWSCredentials() {
 
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
+
+    if (fileInputRef.current && fileInputRef.current.files) {
+      const selectedFile = fileInputRef.current.files[0];
+      setFileName(selectedFile.name);
+      console.log(selectedFile);
+    }
+
     // TODO: (onboarding-wizard) handle file change and naming. Set Input field to file.name and use temporary file path for the upload value
   };
 
   function handleSelectChange(newValue: string) {
+    console.log(newValue);
     setCredentialType(newValue);
   }
 
@@ -127,12 +137,12 @@ export default function AWSCredentials() {
                 {[options[2].value, options[3].value].includes(
                   credentialType
                 ) && (
-                    <div className="mt-2 text-sm text-black-400">
-                      {credentialType === options[3].value
-                        ? 'Komiser will fetch the credentials from AWS'
-                        : 'Komiser will load credentials from AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.'}
-                    </div>
-                  )}
+                  <div className="mt-2 text-sm text-black-400">
+                    {credentialType === options[3].value
+                      ? 'Komiser will fetch the credentials from AWS'
+                      : 'Komiser will load credentials from AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY.'}
+                  </div>
+                )}
               </div>
 
               {credentialType === options[0].value && (
@@ -143,7 +153,9 @@ export default function AWSCredentials() {
                     id="file-path-input"
                     icon={<Folder2Icon />}
                     subLabel="Enter the path or browse the file"
-                    placeholder="C:\Documents\Komiser\credentials"
+                    placeholder={
+                      fileName && 'C:\\Documents\\Komiser\\credentials'
+                    }
                     fileInputRef={fileInputRef}
                     iconClick={handleButtonClick}
                     handleFileChange={handleFileChange}

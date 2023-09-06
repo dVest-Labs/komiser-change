@@ -28,7 +28,7 @@ const options: SelectOptions[] = [
     icon: <DocumentTextIcon />,
     label: 'Credentials File',
     value: 'credentials-file'
-  },
+  }
 ];
 
 export default function KubernetesCredentials() {
@@ -54,7 +54,7 @@ export default function KubernetesCredentials() {
   const handleFileChange = (event: any) => {
     const file = event.target.files[0];
     // TODO: (onboarding-wizard) handle file change and naming. Set Input field to file.name and use temporary file path for the upload value
-    console.log(file);
+    // console.log(file);
   };
 
   function handleSelectChange(newValue: string) {
