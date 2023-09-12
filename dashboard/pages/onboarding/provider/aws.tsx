@@ -76,7 +76,7 @@ export default function AWSCredentials() {
     if (fileInputRef.current && fileInputRef.current.files) {
       const selectedFile = fileInputRef.current.files[0];
       setFileName(selectedFile.name);
-      console.log(selectedFile);
+      
     }
 
     // TODO: (onboarding-wizard) handle file change and naming. Set Input field to file.name and use temporary file path for the upload value
