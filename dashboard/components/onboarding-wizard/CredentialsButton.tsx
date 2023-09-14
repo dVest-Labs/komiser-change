@@ -4,12 +4,14 @@ import Button from '../button/Button';
 
 interface CredentialsButtonProps {
   nextLabel?: string;
+  sectionName: string;
   handleNext?: (e?: any) => void;
 }
 
 function CredentialsButton({
   handleNext,
-  nextLabel = 'Add a cloud account'
+  nextLabel = 'Add a cloud account',
+  sectionName
 }: CredentialsButtonProps) {
   const router = useRouter();
 
@@ -28,7 +30,7 @@ function CredentialsButton({
         size="lg"
         style="primary"
         type="button"
-        disabled={true}
+        disabled={!sectionName && true}
       >
         {nextLabel}
       </Button>

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 interface LabelledInputProps {
   id: string;
@@ -9,6 +9,7 @@ interface LabelledInputProps {
   subLabel?: string;
   disabled?: boolean;
   placeholder?: string;
+  onChange?: (value: any) => void;
 }
 
 function LabelledInput({
@@ -19,8 +20,11 @@ function LabelledInput({
   value,
   subLabel,
   placeholder,
+  onChange,
   disabled = false
 }: LabelledInputProps) {
+  console.log(value);
+
   return (
     <div>
       <label htmlFor={id} className="mb-2 block text-gray-700">
@@ -46,6 +50,7 @@ function LabelledInput({
           value={value}
           disabled={disabled}
           placeholder={placeholder}
+          onChange={onChange}
           className={`block w-full rounded py-[14.5px] text-sm text-black-900 outline outline-black-200 focus:outline-2 focus:outline-primary ${
             icon ? 'pl-10' : 'pl-3'
           }`}
