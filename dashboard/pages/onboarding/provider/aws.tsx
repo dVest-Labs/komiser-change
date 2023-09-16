@@ -57,12 +57,21 @@ export default function AWSCredentials() {
     options[0].value
   );
 
-  const [fileName, setFileName] = useState<string>('');
+  const [fileName, setFileName] = useState<string>('C:\\Documents\\Komiser\\credentials');
+
+  const [labelName, setLabelName] = useState<string>('');
+  const [sectionName, setSectionName] = useState<string>('');
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const handleNext = () => {
+    if (fileInputRef.current && labelName && credentialType && sectionName) {
+      console.log(`Your Account is ${labelName} and the file is ${fileName}`);
+    }
     // TODO: (onboarding-wizard) complete form inputs, validation, submission and navigation
   };
 
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -76,16 +85,18 @@ export default function AWSCredentials() {
     if (fileInputRef.current && fileInputRef.current.files) {
       const selectedFile = fileInputRef.current.files[0];
       setFileName(selectedFile.name);
-      console.log(selectedFile);
+      // console.log(selectedFile)
     }
 
     // TODO: (onboarding-wizard) handle file change and naming. Set Input field to file.name and use temporary file path for the upload value
   };
 
   function handleSelectChange(newValue: string) {
-    console.log(newValue);
+    // console.log(newValue);
     setCredentialType(newValue);
   }
+
+  //
 
   return (
     <div>
@@ -123,6 +134,8 @@ export default function AWSCredentials() {
               id="account-name"
               label="Account name"
               placeholder="my-aws-account"
+              onChange={e => setLabelName(e.target.value)}
+              value={labelName}
             />
             <div className="flex flex-col space-y-8 rounded-md bg-komiser-100 p-5">
               <div>
@@ -154,7 +167,7 @@ export default function AWSCredentials() {
                     icon={<Folder2Icon />}
                     subLabel="Enter the path or browse the file"
                     placeholder={
-                      fileName && 'C:\\Documents\\Komiser\\credentials'
+                      fileName  
                     }
                     fileInputRef={fileInputRef}
                     iconClick={handleButtonClick}
@@ -167,6 +180,8 @@ export default function AWSCredentials() {
                     label="Profile"
                     placeholder="default"
                     subLabel="Name of the section in the credentials file"
+                    onChange={e => setSectionName(e.target.value)}
+                    value={sectionName}
                   />
                 </div>
               )}
@@ -192,7 +207,10 @@ export default function AWSCredentials() {
               )}
             </div>
           </div>
-          <CredentialsButton handleNext={handleNext} />
+          <CredentialsButton
+            handleNext={handleNext}
+            sectionName={sectionName}
+          />
         </LeftSideLayout>
 
         <RightSideLayout>
